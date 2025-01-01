@@ -1,34 +1,35 @@
-import axios from "axios";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { signInrequest } from '../redux/userSlice';
+import { sininadmin } from '../redux/adminredux/adminSlice';
+import { useNavigate } from 'react-router-dom';
+import checkCookieToken from '../cheakcookie';
 
-const Signup=()=>{
-
-    const [username,setusername]=useState('')
-        const [email,setemail]=useState('')
-    const [password,setpassword]=useState('')
-        const [message,setmessage]=useState('')
-        const navigate=useNavigate()
-const signupcall=async ()=>{
-    try {
-        const res=await axios.post('http://localhost:3000/user/resister',{username,
-            email,
-            password
-        })
-        const data=res.data;
-        setmessage(data.message);
-        navigate("/sign-in")
-    } catch (error) {
-        setmessage(error)
+const AdminSignin = () => {
+  const [email,setemail]=useState('');
+    const [password,setpassword]=useState('');
+    const [message,setmessage]=useState('');
+    const dispatch=useDispatch();
+    const mess=useSelector((state)=>state.adminSlice.message);
+    useEffect(()=>{
+        if (checkCookieToken("admintoken")) {
+        nav("/admin");
     }
-}
+       setmessage(mess);
 
-    return (
-        <section class="bg-white">
+    },[mess])
+    const nav=useNavigate()
+    const sinin= ()=>{
+        dispatch(sininadmin({email,password}));
+    }
+    
+  return (
+    <div>
+      <section class="bg-white">
     <div class="grid grid-cols-1 lg:grid-cols-2">
         <div class="relative flex items-end px-4 pb-10 pt-60 sm:pb-16 md:justify-center lg:pb-24 bg-gray-50 sm:px-6 lg:px-8">
             <div class="absolute inset-0">
-                <img class="object-cover w-full h-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/signup/4/girl-working-on-laptop.jpg" alt="" />
+                <img class="object-cover object-top w-full h-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/signin/4/girl-thinking.jpg" alt="" />
             </div>
             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
 
@@ -75,34 +76,14 @@ const signupcall=async ()=>{
 
         <div class="flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24">
             <div class="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
-                <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign up to Celebration</h2>
-                <p class="mt-2 text-base text-gray-600">Already have an account? <Link to={'/sign-in'}><a href="#" title="" class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">Login</a></Link> </p>
+                <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign in to Admin</h2>
 
-                <form action="#" method="POST" class="mt-8" onSubmit={(e)=>{
+                <form action="" method="POST" class="mt-8" onSubmit={(e)=>{
                     e.preventDefault();
-                     signupcall();
-                }} >
+                    sinin();
+
+                }}>
                     <div class="space-y-5">
-                        <div>
-                            <label for="" class="text-base font-medium text-gray-900"> Username </label>
-                            <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </div>
-
-                                <input
-                                    type="text"
-                                    name=""
-                                    onChange={(e)=>setusername(e.target.value)}
-                                    id=""
-                                    placeholder="Enter your full name"
-                                    class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
-                                />
-                            </div>
-                        </div>
-
                         <div>
                             <label for="" class="text-base font-medium text-gray-900"> Email address </label>
                             <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
@@ -114,8 +95,8 @@ const signupcall=async ()=>{
 
                                 <input
                                     type="email"
-                                    name=""
                                     onChange={(e)=>setemail(e.target.value)}
+                                    name=""
                                     id=""
                                     placeholder="Enter email to get started"
                                     class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
@@ -124,7 +105,11 @@ const signupcall=async ()=>{
                         </div>
 
                         <div>
-                            <label for="" class="text-base font-medium text-gray-900"> Password </label>
+                            <div class="flex items-center justify-between">
+                                <label for="" class="text-base font-medium text-gray-900"> Password </label>
+
+                                <a href="#" title="" class="text-sm font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline"> Forgot password? </a>
+                            </div>
                             <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,8 +124,8 @@ const signupcall=async ()=>{
 
                                 <input
                                     type="password"
-                                    onChange={(e)=>setpassword(e.target.value)}
                                     name=""
+                                    onChange={(e)=>setpassword(e.target.value)}
                                     id=""
                                     placeholder="Enter your password"
                                     class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
@@ -153,7 +138,7 @@ const signupcall=async ()=>{
                                 type="submit"
                                 class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
                             >
-                                Sign up
+                                Log in
                             </button>
                         </div>
                     </div>
@@ -165,26 +150,24 @@ const signupcall=async ()=>{
                         class="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none"
                     >
                         <div class="absolute inset-y-0 left-0 p-4">
-                           
+                            
                         </div>
-                        {
-                            message
-                        }
+                        {message}
                     </button>
 
                   
                 </div>
+                                            <label for="" class="text-base font-medium text-gray-900">
+                                                The 
+                                            </label>
 
-                <p class="mt-5 text-sm text-gray-600">
-                    This site is protected by reCAPTCHA and the Google <a href="#" title="" class="text-blue-600 transition-all duration-200 hover:underline hover:text-blue-700">Privacy Policy</a> &
-                    <a href="#" title="" class="text-blue-600 transition-all duration-200 hover:underline hover:text-blue-700">Terms of Service</a>
-                </p>
             </div>
         </div>
     </div>
 </section>
 
-    )
+    </div>
+  )
 }
 
-export default Signup;
+export default AdminSignin

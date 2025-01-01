@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { signInrequest } from '../redux/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import checkCookieToken from '../cheakcookie';
 
 const Signin = () => {
     const [email,setemail]=useState('');
     const [password,setpassword]=useState('');
     const [message,setmessage]=useState('');
     const dispatch=useDispatch();
+    const navigate=useNavigate();
     const mess=useSelector((state)=>state.userSlice.message);
     useEffect(()=>{
        setmessage(mess);
@@ -14,7 +17,11 @@ const Signin = () => {
     },[mess])
     const sinin= ()=>{
         dispatch(signInrequest({email,password}));
+      
     }
+      if (checkCookieToken("token")) {
+            navigate("/")
+        }
   return (
     <div>
       <section class="bg-white">
@@ -69,7 +76,9 @@ const Signin = () => {
         <div class="flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24">
             <div class="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
                 <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign in to Celebration</h2>
-                <p class="mt-2 text-base text-gray-600">Don’t have an account? <a href="#" title="" class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">Create a free account</a></p>
+                <p class="mt-2 text-base text-gray-600">Don’t have an account? <Link to={'/sign-up'}>
+                <a href="" title="" class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">Create a free account</a>
+                </Link> </p>
 
                 <form action="#" method="POST" class="mt-8" onSubmit={(e)=>{
                     e.preventDefault();

@@ -1,22 +1,29 @@
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllEvents } from '../redux/features/eventSlice';
-import { Link } from 'react-router-dom';
+import { eventBookeduserallevents, getAllEvents } from '../redux/features/eventSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import checkCookieToken from '../cheakcookie';
+import Signin from './Signin';
 
 const AfterSignin = () => {
     const dispach=useDispatch();
     const allevents=useSelector((state)=>state.eventSlice.allevents);
-      const getall= ()=>{
+      const getall= ()=>{        
         dispach(getAllEvents());
+        dispach(eventBookeduserallevents());
     }
     // useMemo(()=>{
         
     // })
     useEffect(()=>{
 getall();
-    },[]);
 
-  
+    },[]);
+const nav=useNavigate()
+  if (!checkCookieToken("token")) {
+    nav("/sign-in")
+    return;
+  }
     // if (allevents.length==0) {
     //     return <div className="">
     //         loding...........
@@ -37,13 +44,13 @@ getall();
             <Link to={`/${each._id}`} > <a href="#" title="" class="block aspect-w-4 aspect-h-3">
                     <img class="object-cover w-full h-full" src={each.images[0]} alt="" />
                 </a>
-                <span class="inline-flex px-4 py-2 text-xs font-semibold tracking-widest uppercase rounded-full text-rose-500 bg-rose-100 mt-9"> Technology </span>
+                <span class="inline-flex px-4 py-2 text-xs font-semibold tracking-widest uppercase rounded-full text-rose-500 bg-rose-100 mt-9"> {each.category} </span>
                 <p class="mt-6 text-xl font-semibold">
                     <a href="#" title="" class="text-black"> {each.eventname} </a>
                 </p>
-                <p class="mt-4 text-gray-600">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                <p class="mt-4 text-gray-600">{each.dis}.</p>
                 <div class="h-0 mt-6 mb-4 border-t-2 border-gray-200 border-dashed"></div>
-                <span class="block text-sm font-bold tracking-widest text-gray-500 uppercase"> Martin Jones . June {each.booklastdate}, {new Date().getFullYear()} </span>
+                <span class="block text-sm font-bold tracking-widest text-gray-500 uppercase">Last Date {each.booklastdate}, {new Date().getFullYear()} </span>
                 </Link>
             </div>
           )) }

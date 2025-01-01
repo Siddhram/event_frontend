@@ -2,9 +2,10 @@ import { useSelector } from "react-redux";
 import UserShowNotSinin from "./components/UserShowNotSinin";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import Cookies from 'js-cookie'
+import checkCookieToken from "./cheakcookie";
 export default function App() {
-     const user=useSelector((state)=>state.userSlice.userData.username)
+     const user=useSelector((state)=>state.userSlice?.userData?.username)||""
     useEffect(()=>{
         console.log(user);
         
@@ -16,7 +17,7 @@ export default function App() {
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex-shrink-0">
                     <a href="#" title="" class="flex">
-                        <img class="w-auto h-8" src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
+                        <img class="w-32 h-12" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL1n22F_pH_NsGs1vEKFNVyUnz8VfpS4Z2Dw&s" alt="" />
                     </a>
                 </div>
 
@@ -50,9 +51,12 @@ export default function App() {
 
                     
                 </div>
+                {checkCookieToken("token")?(<Link to={'/user'}>
+                  <button  title="" class="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full" role="button"> {user} </button>
+       </Link>):<div></div>}
+                
 
-                <a href="#" title="" class="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full" role="button"> {user} </a>
-            </div>
+                   </div>
         </div>
     </header>
      <UserShowNotSinin></UserShowNotSinin>

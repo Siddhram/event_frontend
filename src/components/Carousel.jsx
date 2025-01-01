@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Carousel = () => {
+const Carousel = ({imgs}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
@@ -11,13 +11,13 @@ const Carousel = () => {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? imgs.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === imgs.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -29,7 +29,7 @@ const Carousel = () => {
           transform: `translateX(-${currentIndex * 100}%)`,
         }}
       >
-        {images.map((image, index) => (
+        {imgs.map((image, index) => (
           <img
             key={index}
             src={image}
@@ -51,7 +51,7 @@ const Carousel = () => {
         &#10095;
       </button>
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {images.map((_, index) => (
+        {imgs.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
