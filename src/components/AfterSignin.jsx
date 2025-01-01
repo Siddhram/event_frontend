@@ -34,8 +34,9 @@ const nav=useNavigate()
         <section class="py-10 bg-white sm:py-16 lg:py-10">
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Latest from blog</h2>
-            <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
+            <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Explore Connect and Grow  </h2>
+            <img class=" mt-5 object-cover w-32 h-32 mx-auto rounded-full" src="https://media.licdn.com/dms/image/v2/D4D03AQE5ufZYKW5V1g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1696580075435?e=1741219200&v=beta&t=y6k2cdBUuCEe5-egBmwIAxHlVMHYMqT9KuPdDAJT_BU" alt="" />
+            <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">Attending events gives you a fresh perspective on life, ideas, and your goals.</p>
         </div>
 
         <div class="grid max-w-md grid-cols-1 mx-auto mt-12 lg:max-w-full lg:mt-16 lg:grid-cols-3 gap-x-16 gap-y-12">
@@ -83,6 +84,7 @@ const nav=useNavigate()
         </div>
     </div>
 </section>
+
 
     </div>
   )
