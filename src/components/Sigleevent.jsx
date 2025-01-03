@@ -8,14 +8,17 @@ import { bookevent, bookeventzero } from '../redux/features/eventSlice';
 import checkCookieToken from '../cheakcookie';
 const stripePromise = loadStripe('pk_test_51QEukkLBvhDT0PxxvAhPvkdUr3qJB8EE2JKBJvHnooYtysH018lh8I89iAYcUgdC3RCY5L6wPGjAGTGjBBFDAffc00RGdRDs5d');
 
-const PaymentForm = ({ amount,ticket, id,email,rem}) => {
+const PaymentForm = ({ amount,ticket, id,email,rem,adharcardno}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [paymentStatus, setPaymentStatus] = useState('fill details');
   const dispatch=useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+if (email.length==0||ticket==0||(adharcardno+"").length!=12) {
+                            setPaymentStatus(`Pleasefill from`);
+return;
+            }
     try {
       // Create payment intent from backend
                       console.log("ticket ",ticket);
@@ -25,7 +28,10 @@ const PaymentForm = ({ amount,ticket, id,email,rem}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({eventId:id, tickets:ticket }), // Amount in paise (₹100.00 = 1000 paise)
       });
-
+//   if (email.length==0||ticket==0||(adharcardno+"").length!=12) {
+//                             setPaymentStatus(`Pleasefill from`);
+// return;
+//             }
    const r=await response.json()
    if(r.status==404){
         setPaymentStatus(`plese login and try`);
@@ -50,15 +56,12 @@ console.log(r);
       } else if (paymentIntent.status === 'succeeded') {
         // console.log('Payment Successful:', paymentIntent);
             // setPaymentStatus(`Payment successful! Cheakout the mail of ${email} to see your tickets`);
-            if (email.length==0||ticket==0) {
-                            setPaymentStatus(`Pleasefill from`);
-
-            }
-            else{
+          
+            // else{
                 
-        dispatch(bookevent({eventbooked:id,ticket:ticket,email:email}))
+        dispatch(bookevent({eventbooked:id,ticket:ticket,email:email,adharcardno}))
 setPaymentStatus(`Payment successful! Cheakout the mail of ${email} to see your tickets`);
-            }
+            // }
       }
     } catch (err) {
       console.error('Error:', err);
@@ -69,12 +72,12 @@ setPaymentStatus(`Payment successful! Cheakout the mail of ${email} to see your 
     return <div className="">
          <button onClick={()=>{
             // setPaymentStatus(`Payment successful! Cheakout the mail of ${email} to see your tickets`);
-            if (email.length==0||ticket==0) {
+            if (email.length==0||ticket==0||(adharcardno+"").length!=12) {
                             setPaymentStatus(`Pleasefill from`);
 
             }
             else{
-        dispatch(bookeventzero({eventbooked:id,ticket:ticket,email:email}))
+        dispatch(bookeventzero({eventbooked:id,ticket:ticket,email:email,adharcardno}))
 setPaymentStatus(`Payment successful! Cheakout the mail of ${email} to see your tickets`);
             }
          }} class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-orange-500 border border-transparent rounded-md focus:outline-none hover:bg-orange-600 focus:bg-orange-600">
@@ -122,6 +125,8 @@ const Sigleevent = () => {
     const singlearray=allevents.filter((each)=>each._id==id);
     const perticularevent=singlearray[0];
     const [ticket,setticket]=useState(0);
+        const [adharcardno,setadharcardno]=useState(0);
+
         const [email,setemail]=useState(0);
 const nav=useNavigate()
   if (!checkCookieToken("token")) {
@@ -246,13 +251,29 @@ const nav=useNavigate()
 
                                     </div>
                                 </div>
+<div>
+                                    <label for="F" class="text-base font-medium text-gray-900"> Aadhaar Card No </label>
+                                    <div class="mt-2.5 relative">
+                                        <input
+    type="number"
+    name=""
+    id=""
+    onChange={(e)=>setadharcardno(e.target.value)}
+    placeholder="Adhar card number"
+    class="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md resize-y focus:outline-none focus:ring-orange-500 focus:border-orange-500 caret-orange-500"
+    min="000000000000"
+/>
+
+                                    </div>
+                                </div>
 
                                 <div>
+
                                     {/* <button type="submit" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-orange-500 border border-transparent rounded-md focus:outline-none hover:bg-orange-600 focus:bg-orange-600">
                                         Book the event
                                     </button> */}
                                      <Elements stripe={stripePromise}>
-      <PaymentForm amount={perticularevent.price} ticket={ticket} id={id}  email={email} rem={perticularevent.totalbooking-perticularevent.alreadybooked} /> {/* Amount in paise (₹100.00) */}
+      <PaymentForm amount={perticularevent.price} ticket={ticket} id={id}  email={email} rem={perticularevent.totalbooking-perticularevent.alreadybooked} adharcardno={adharcardno} /> {/* Amount in paise (₹100.00) */}
     </Elements>
                                 </div>
                             </div>
@@ -321,7 +342,7 @@ const nav=useNavigate()
                         <img class="flex-shrink-0 object-cover w-10 h-10 rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/7/avatar-2.jpg" alt="" />
                         <div class="min-w-0 ml-3 mr-auto">
                             <p class="text-base font-semibold text-black truncate">{each.userId.username}</p>
-                            <p class="text-sm text-gray-600 truncate">{each.userId.email}</p>
+                            <p class="text-sm text-gray-600 truncate">{each.adharcardno}</p>
                         </div>
                         <a href="#" title="" class="inline-block text-sky-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

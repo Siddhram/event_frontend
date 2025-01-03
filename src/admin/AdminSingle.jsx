@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { delete_event, getallbookedeventsmem } from '../redux/adminredux/adminSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import checkCookieToken from '../cheakcookie';
 import AdminSignin from './AdminSignin';
+import axios from 'axios';
 
 const AdminSingle = () => {
     const {id}=useParams();
     
     const dispatch=useDispatch();
     const array=useSelector((state)=>state.adminSlice.alleventbookedmember)
+    const [adhar,setadhar]=useState('');
     useEffect(()=>{
         dispatch(getallbookedeventsmem());
     },[array])
@@ -19,13 +21,27 @@ const AdminSingle = () => {
         nav('/admin/sign-in')
   return;
 }
-        const myeventbook=array.filter((each)=>each.eventbooked==id)||[];
-if(myeventbook.length==0){
+let ev=array.filter((each)=>each.eventbooked==id);
+        let myeventbook=array.filter((each)=>each.eventbooked==id).filter((each)=>((each.adharcardno+"").includes(adhar+"")&&each.adharcardno!=0))||[];
+            // useEffect(()=>{
+            //     const array=myeventbook.filter((each)=>(each.adharcardno+"").startsWith(adhar+""));
+            //     myeventbook=array;
+            //     console.log(array);
+                
+            // },[adhar])
+
+if(ev.length==0){
     return (
         <div className=" justify-items-center align-middle">
             No User Booked Ticket For This event
         </div>
     )
+}
+const sendmail=async ()=>{
+    const res=await axios.post('http://localhost:3000/event/admin/mail',{userId:JSON.parse(localStorage.getItem('user')),eventbooked:id},{
+        withCredentials:true
+    })
+    console.log(res.data);
 }
   return (
         
@@ -35,7 +51,9 @@ if(myeventbook.length==0){
             <h2 class="text-3xl font-bold leading-tight text-black sm:text-1xl lg:text-2xlxl">This Event Booked by {myeventbook.length} Users</h2>
          
         </div>
-
+             <input type="number"
+                 class="block max-w-screen-md px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md resize-y focus:outline-none focus:ring-orange-500 focus:border-orange-500 caret-orange-500"
+             value={adhar} onChange={(e)=>setadhar(e.target.value)} name="" id="" placeholder='Aadhaar Card No' />
         <div class="grid grid-cols-1 gap-6 px-4 mt-12 sm:px-0 xl:mt-20 xl:grid-cols-4 sm:grid-cols-2">
            {myeventbook && myeventbook.map((each,i)=>(
             <div className="">
@@ -45,7 +63,7 @@ if(myeventbook.length==0){
                         <img class="flex-shrink-0 object-cover w-10 h-10 rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/7/avatar-2.jpg" alt="" />
                         <div class="min-w-0 ml-3 mr-auto">
                             <p class="text-base font-semibold text-white truncate">{each.userId.username}</p>
-                            <p class="text-sm text-gray-400 truncate">{each.userId.email}</p>
+                            <p class="text-sm text-gray-400 truncate">{each.adharcardno}</p>
                         </div>
                         <a href="#" title="" class="inline-block text-sky-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -66,12 +84,15 @@ if(myeventbook.length==0){
             </div>
             
 <button onClick={()=>{
+    sendmail().then(()=>{
     dispatch(delete_event({_id:each._id}));
-}} type="button" className="my-1 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    })
+    
+}} type="button" className="my-2 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 Accept
 <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
 {each.ticket}
-</span>
+</span>  
 </button>
 
             </div>

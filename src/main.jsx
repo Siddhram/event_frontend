@@ -16,6 +16,7 @@ import Userbookedevent from './components/Userbookedevent.jsx'
 import AdminSignin from './admin/AdminSignin.jsx'
 import Adminpage from './admin/Adminpage.jsx'
 import AdminSingle from './admin/AdminSingle.jsx'
+import Createevent from './admin/Createevent.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/education' element={<ForEducation></ForEducation>}></Route>
             <Route path='/friends' element={<ForFriends></ForFriends>}></Route>
       <Route path='/admin' element={<Adminpage></Adminpage>}></Route>
+      <Route path='/admin/create' element={<Createevent></Createevent>}></Route>
 
       <Route path='/sign-in' element={<Signin></Signin>}></Route>
             <Route path='/admin/sign-in' element={<AdminSignin></AdminSignin>}></Route>
