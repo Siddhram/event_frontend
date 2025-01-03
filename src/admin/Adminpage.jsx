@@ -26,6 +26,9 @@ if (!checkCookieToken("admintoken")) {
     nav('/admin/sign-in')
   return;
 }
+const move=()=>{
+    nav("/admin/create");
+}
   return (
     <div>
         {/* <AfterSignin></AfterSignin> */}
@@ -84,6 +87,10 @@ if (!checkCookieToken("admintoken")) {
 </section>
 
     </div>
+ <button className="m-2 p-2 ml-10 rounded-md bg-red-600 text-white" onClick={()=>{
+         move();
+      }}>Create event</button>
+
     </div>
   )
 }

@@ -21,6 +21,7 @@ const AdminSingle = () => {
         nav('/admin/sign-in')
   return;
 }
+
 let ev=array.filter((each)=>each.eventbooked==id);
         let myeventbook=array.filter((each)=>each.eventbooked==id).filter((each)=>((each.adharcardno+"").includes(adhar+"")&&each.adharcardno!=0))||[];
             // useEffect(()=>{
@@ -102,6 +103,7 @@ Accept
            
         </div>
     </div>
+     
 </section>
   )
 }
