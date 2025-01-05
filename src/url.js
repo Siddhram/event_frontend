@@ -1,5 +1,5 @@
 const frontendurl=()=>{
-    return "https://eventbackend2.vercel.app/";
+    return "https://event-backend-05tm.onrender.com/";
 }
 
 export default frontendurl;
