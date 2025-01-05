@@ -20,14 +20,14 @@ const Adminpage = () => {
         
     // })
     useEffect(()=>{
-        
-getall();
-
-    },[]);
-if (!checkCookieToken("admintoken")) {
+        if (!checkCookieToken("admintoken")) {
     nav('/admin/sign-in')
   return;
 }
+getall();
+
+    },[]);
+
 const move=()=>{
     nav("/admin/create");
 }

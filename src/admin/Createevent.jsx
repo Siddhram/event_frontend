@@ -6,10 +6,7 @@ import frontendurl from "../url";
 
 const Createevent = () => {
     const nav=useNavigate();
-    if (!checkCookieToken("admintoken")) {
-    nav('/admin/sign-in')
-  return;
-}
+   
     const [category,setcategory]=useState('');
         const [EventName,setEventName]=useState('');
     const [EventPlace,setEventPlace]=useState('');
@@ -47,6 +44,10 @@ const handelbackedcall=async()=>{
 }
 
 useEffect(()=>{
+   if (!checkCookieToken("admintoken")) {
+    nav('/admin/sign-in')
+  return;
+}
       const array=Image.split(",");
       const fil=array.map((each)=>each.trim())
       setImagearray(fil)

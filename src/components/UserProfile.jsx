@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateuser } from '../redux/userSlice';
 import axios from 'axios';
@@ -6,7 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import checkCookieToken from '../cheakcookie';
 
 const UserProfile = () => {
-    
+    useEffect(()=>{
+        if (!checkCookieToken("token")) {
+    nav("/sign-in")
+    return;
+  }
+    },[])
     /*
     username:{
     type:String,

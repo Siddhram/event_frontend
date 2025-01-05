@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import Carousel from './Carousel';
@@ -130,10 +130,13 @@ const Sigleevent = () => {
 
         const [email,setemail]=useState(0);
 const nav=useNavigate()
-  if (!checkCookieToken("token")) {
+  
+useEffect(()=>{
+if (!checkCookieToken("token")) {
     nav("/sign-in")
     return;
   }
+},[])
     if (allevents.length==0) {
         return <div>
             loding........

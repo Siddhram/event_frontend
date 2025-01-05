@@ -17,15 +17,18 @@ const ForChildevent = () => {
     // useMemo(()=>{
         
     // })
-    useEffect(()=>{
-getall();
-    },[]);
 
-   const nav=useNavigate()
-  if (!checkCookieToken("token")) {
+    const nav=useNavigate()
+  
+    useEffect(()=>{
+        if (!checkCookieToken("token")) {
     nav("/sign-in")
     return;
   }
+getall();
+    },[]);
+
+   
     if (allevents.length==0) {
         return <div className="">
             loding...........

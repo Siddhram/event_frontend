@@ -12,6 +12,9 @@ const Signin = () => {
     const navigate=useNavigate();
     const mess=useSelector((state)=>state.userSlice.message);
     useEffect(()=>{
+        if (checkCookieToken("token")) {
+            navigate("/")
+        }
        setmessage(mess);
 
     },[mess])
@@ -19,9 +22,7 @@ const Signin = () => {
         dispatch(signInrequest({email,password}));
       
     }
-      if (checkCookieToken("token")) {
-            navigate("/")
-        }
+      
   return (
     <div>
       <section class="bg-white">
@@ -80,7 +81,7 @@ const Signin = () => {
                 <a href="" title="" class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">Create a free account</a>
                 </Link> </p>
 
-                <form action="#" method="POST" class="mt-8" onSubmit={(e)=>{
+                <form action="" method="POST" class="mt-8" onSubmit={(e)=>{
                     e.preventDefault();
                     sinin();
                 }}>

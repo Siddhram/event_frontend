@@ -17,14 +17,16 @@ const ForFriends = () => {
     // useMemo(()=>{
         
     // })
+    const nav=useNavigate()
+  
     useEffect(()=>{
-getall();
-    },[]);
-const nav=useNavigate()
-  if (!checkCookieToken("token")) {
+        if (!checkCookieToken("token")) {
     nav("/sign-in")
     return;
   }
+getall();
+    },[]);
+
   
     if (allevents.length==0) {
         return <div className="">

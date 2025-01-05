@@ -8,11 +8,12 @@ import UserBookComponent from './UserBookComponent';
 const Userbookedevent = () => {
     const dispatch=useDispatch();
     const nav=useNavigate()
-  if (!checkCookieToken("token")) {
+  
+    useEffect(()=>{
+      if (!checkCookieToken("token")) {
     nav("/sign-in")
     return;
   }
-    useEffect(()=>{
       dispatch(userbookedevents());
     },[]);
     const userevents=useSelector((state)=>state.eventSlice.userbookedevents)||[];

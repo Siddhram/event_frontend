@@ -20,7 +20,13 @@ const AfterSignin = () => {
         
     // })
     const [l,setl]=useState("0");
+    const nav=useNavigate()
+ 
     useEffect(()=>{
+       if (!checkCookieToken("token")) {
+    nav("/sign-in")
+    return;
+  }
 getall();
           dispach(userbookedevents());
 load().then((res)=>{
@@ -35,11 +41,7 @@ load().then((res)=>{
       // setl(res.data.length);
       return res;
     }
-const nav=useNavigate()
-  if (!checkCookieToken("token")) {
-    nav("/sign-in")
-    return;
-  }
+
   const free=allevents.filter((each)=>each.price==0);
     // if (allevents.length==0) {
     //     return <div className="">
