@@ -6,6 +6,11 @@ import checkCookieToken from '../cheakcookie';
 
 const IssueAdmin = () => {
     const [data,setdata]=useState([]);
+      const nav=useNavigate();
+//     if (!checkCookieToken("admintoken")) {
+//     nav('/')
+//   return;
+// }
     const func=async ()=>{
         const res=await axios.get(`${frontendurl()}message/getallissues`,{
             withCredentials:true
@@ -16,11 +21,7 @@ const IssueAdmin = () => {
       const res=await axios.post(`${frontendurl()}message/delete/${userdata._id}`,userdata);
       return res;
     }
-     const nav=useNavigate();
-    if (!checkCookieToken("admintoken")) {
-    nav('/admin/sign-in')
-  return;
-}
+   
    
     const call=()=>{
 func().then((res)=>{
@@ -29,6 +30,11 @@ func().then((res)=>{
         })
     }
     useEffect(()=>{
+
+      if (!checkCookieToken("admintoken")) {
+    nav('/admin/sign-in')
+  return;
+}
         call();
     },[]);
      const call2=(userdata)=>{

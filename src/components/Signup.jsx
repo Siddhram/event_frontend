@@ -10,6 +10,7 @@ const Signup=()=>{
     const [password,setpassword]=useState('')
         const [message,setmessage]=useState('')
         const navigate=useNavigate()
+        
 const signupcall=async ()=>{
     try {
         const res=await axios.post(`${frontendurl()}user/resister`,{username,
