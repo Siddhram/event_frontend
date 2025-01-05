@@ -6,6 +6,7 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import { loadStripe } from '@stripe/stripe-js';
 import { bookevent, bookeventzero } from '../redux/features/eventSlice';
 import checkCookieToken from '../cheakcookie';
+import frontendurl from '../url';
 const stripePromise = loadStripe('pk_test_51QEukkLBvhDT0PxxvAhPvkdUr3qJB8EE2JKBJvHnooYtysH018lh8I89iAYcUgdC3RCY5L6wPGjAGTGjBBFDAffc00RGdRDs5d');
 
 const PaymentForm = ({ amount,ticket, id,email,rem,adharcardno}) => {
@@ -23,7 +24,7 @@ return;
       // Create payment intent from backend
                       console.log("ticket ",ticket);
 
-      const response = await fetch('http://localhost:3000/event/pay', {
+      const response = await fetch(`${frontendurl()}event/pay`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({eventId:id, tickets:ticket }), // Amount in paise (₹100.00 = 1000 paise)
@@ -140,7 +141,7 @@ const nav=useNavigate()
     }
 
   return (
-    <div>
+    <div className='bg-gray-900 py-100'>
         <section class="py-10 bg-gray-900 sm:py-16 lg:py-10">
     <div class="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:items-stretch md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-10">
@@ -339,7 +340,7 @@ const nav=useNavigate()
              <div class="overflow-hidden bg-white rounded-md">
                 <div class="px-5 py-6">
                     <div class="flex items-center justify-between">
-                        <img class="flex-shrink-0 object-cover w-10 h-10 rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/7/avatar-2.jpg" alt="" />
+                        <img class="flex-shrink-0 object-cover w-10 h-10 rounded-full" src={each.userId.image?each.userId.image:"https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNhcnRvb258ZW58MHx8MHx8fDA%3D"} alt="" />
                         <div class="min-w-0 ml-3 mr-auto">
                             <p class="text-base font-semibold text-black truncate">{each.userId.username}</p>
                             <p class="text-sm text-gray-600 truncate">{each.adharcardno}</p>
@@ -354,7 +355,9 @@ const nav=useNavigate()
                     </div>
                     <blockquote class="mt-5">
                         <p class="text-base text-gray-800">
-                            Simply the best. Better than all the rest. I’d recommend this product to beginners and advanced users.
+                            {
+                                each.userId.dis
+                            }
                             <span class="block text-sky-500">                          Tickets  :  {each.ticket}
 </span>
                         </p>

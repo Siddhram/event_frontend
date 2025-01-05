@@ -19,7 +19,8 @@ const UserShowNotSinin = () => {
                 {checkCookieToken("token") ? (
                     <AfterSignin />
                 ) : (
-                    <section className="bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-24">
+                    <section className="bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-1">
+                        
                         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                             <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
                                 <div>
@@ -60,8 +61,14 @@ const UserShowNotSinin = () => {
                                             Log in
                                         </Link>
                                     </p>
-                                </div>
 
+                                     <p className="mt-5 text-gray-600">
+                                        Are You Event creater?{' '}
+                                        <Link to="/admin" className="text-black transition-all duration-200 hover:underline">
+                                           Admin Log in
+                                        </Link>
+                                    </p>
+                                </div>
                                 <div>
                                     <img
                                         className="w-full"
@@ -69,12 +76,24 @@ const UserShowNotSinin = () => {
                                         alt="Event Booking"
                                     />
                                 </div>
+                                <div className=" flex lg:items-center lg:justify-start ">
+                 <Link to={'/contact'}>
+                    <a href="" title="" className="p-3 bg-black rounded-lg text-base text-white transition-all duration-200 hover:text-opacity-80"> Contact </a></Link>
+
+
+                 
+
+                   
+
+                    
+                </div>
                             </div>
                         </div>
                     </section>
                 )}
                 <Connectedsponcer></Connectedsponcer>
             </div>
+            
         </div>
     );
 };

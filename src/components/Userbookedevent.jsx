@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userbookedevents } from '../redux/features/eventSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import checkCookieToken from '../cheakcookie';
+import UserBookComponent from './UserBookComponent';
 
 const Userbookedevent = () => {
     const dispatch=useDispatch();
@@ -30,31 +31,8 @@ const Userbookedevent = () => {
 
         <div class="grid grid-cols-1 mt-12 lg:mt-24 gap-y-12 md:grid-cols-3 gap-x-6">
             {orig.map((each)=>(<Link to={`/${each.eventbooked._id}`}>
-             <div class="md:px-4 lg:px-10">
-                <img class="-rotate-1" src={`${each.eventbooked.images[0]}`} alt="" />
-                
-                 <div className="mt-5">
-<span class=" text-2xl font-bold leading-tight text-black">Event Name  :  </span>   
-<span class=" text-xl font-semibold leading-tight text-black">{each.eventbooked.eventname}</span>   
-
-                </div>
-                <div className="mt-2">
-<span class=" text-xl font-bold leading-tight text-black">Event Ticket  :  </span>   
-<span class=" text-xl font-semibold leading-tight text-black">{each.ticket}</span>   
-
-                </div>
-                                {/* <h3 class="mt-5 text-xl font-bold leading-tight text-black">{each.ticket}</h3> */}
-              <div className="mt-1">
-                                <p class="mt-4 text-base text-gray-600">Place : {each.eventbooked.eventplace}</p>
-              </div>
-   <div className="mt-1">
-                                <p class="mt-4 text-base text-gray-600">Food-Management : {each.eventbooked.foodmanagement}</p>
-              </div>   <div className="mt-1">
-                                <p class="mt-4 text-base text-gray-600">Book-Lastdate : {each.eventbooked.booklastdate}</p>
-              </div>   <div className="mt-1">
-                                <p class="mt-4 text-base text-gray-600">Remaning tickets : {each.eventbooked.totalbooking-each.eventbooked.alreadybooked}</p>
-              </div>
-            </div></Link>))}
+            <UserBookComponent image={each.eventbooked.images[0]} eventname={each.eventbooked.eventname} ticket={each.ticket} eventplace={each.eventbooked.eventplace} foodmanagement={each.eventbooked.foodmanagement}  booklastdate={each.eventbooked.booklastdate} Remaning={each.eventbooked.totalbooking-each.eventbooked.alreadybooked}></UserBookComponent>
+             </Link>))}
            
 
         
@@ -69,3 +47,32 @@ const Userbookedevent = () => {
 }
 
 export default Userbookedevent
+
+
+
+
+// <div class="md:px-4 lg:px-10">
+//                 <img class="-rotate-1" src={`${each.eventbooked.images[0]}`} alt="" />
+                
+//                  <div className="mt-5">
+// <span class=" text-2xl font-bold leading-tight text-black">Event Name  :  </span>   
+// <span class=" text-xl font-semibold leading-tight text-black">{each.eventbooked.eventname}</span>   
+
+//                 </div>
+//                 <div className="mt-2">
+// <span class=" text-xl font-bold leading-tight text-black">Event Ticket  :  </span>   
+// <span class=" text-xl font-semibold leading-tight text-black">{each.ticket}</span>   
+
+//                 </div>
+                               
+//               <div className="mt-1">
+//                                 <p class="mt-4 text-base text-gray-600">Place : {each.eventbooked.eventplace}</p>
+//               </div>
+//    <div className="mt-1">
+//                                 <p class="mt-4 text-base text-gray-600">Food-Management : {each.eventbooked.foodmanagement}</p>
+//               </div>   <div className="mt-1">
+//                                 <p class="mt-4 text-base text-gray-600">Book-Lastdate : {each.eventbooked.booklastdate}</p>
+//               </div>   <div className="mt-1">
+//                                 <p class="mt-4 text-base text-gray-600">Remaning tickets : {each.eventbooked.totalbooking-each.eventbooked.alreadybooked}</p>
+//               </div>
+//             </div>

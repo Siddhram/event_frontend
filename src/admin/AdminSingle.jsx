@@ -39,7 +39,7 @@ if(ev.length==0){
     )
 }
 const sendmail=async ()=>{
-    const res=await axios.post('http://localhost:3000/event/admin/mail',{userId:JSON.parse(localStorage.getItem('user')),eventbooked:id},{
+    const res=await axios.post(`event/admin/mail`,{userId:JSON.parse(localStorage.getItem('user')),eventbooked:id},{
         withCredentials:true
     })
     console.log(res.data);
@@ -61,7 +61,7 @@ const sendmail=async ()=>{
               <div key={i} class="overflow-hidden bg-black rounded-md">
                 <div class="px-5 py-6">
                     <div class="flex items-center justify-between">
-                        <img class="flex-shrink-0 object-cover w-10 h-10 rounded-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/testimonials/7/avatar-2.jpg" alt="" />
+                        <img class="flex-shrink-0 object-cover w-10 h-10 rounded-full" src={each.userId.image?each.userId.image:"https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNhcnRvb258ZW58MHx8MHx8fDA%3D"} alt="" />
                         <div class="min-w-0 ml-3 mr-auto">
                             <p class="text-base font-semibold text-white truncate">{each.userId.username}</p>
                             <p class="text-sm text-gray-400 truncate">{each.adharcardno}</p>

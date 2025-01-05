@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import frontendurl from "../url";
 
 const Signup=()=>{
 
@@ -11,7 +12,7 @@ const Signup=()=>{
         const navigate=useNavigate()
 const signupcall=async ()=>{
     try {
-        const res=await axios.post('http://localhost:3000/user/resister',{username,
+        const res=await axios.post(`${frontendurl()}user/resister`,{username,
             email,
             password
         })

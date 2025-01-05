@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import frontendurl from "../../url";
 export const sininadmin=createAsyncThunk('sininadmin',async (data,{rejectWithValue})=>{
     try {
-        const res=await axios.post('http://localhost:3000/admin/login',data,{
+        const res=await axios.post(`${frontendurl()}admin/login`,data,{
             withCredentials:true
         })
         
@@ -13,7 +14,7 @@ export const sininadmin=createAsyncThunk('sininadmin',async (data,{rejectWithVal
 })
 export const delete_event=createAsyncThunk('delete_event',async (data,{rejectWithValue})=>{
     try {
-        const res=await axios.post(`http://localhost:3000/event/finduseranddeletebookedticket/${data._id}`,{},{
+        const res=await axios.post(`${frontendurl()}event/finduseranddeletebookedticket/${data._id}`,{},{
             withCredentials:true
         })
         console.log(res.data);
@@ -26,7 +27,7 @@ export const delete_event=createAsyncThunk('delete_event',async (data,{rejectWit
 
 export const getallbookedeventsmem=createAsyncThunk('getallbookedeventsmem',async (_,{rejectWithValue})=>{
     try {
-        const res=await axios.get('http://localhost:3000/event/alleventbookeduser');
+        const res=await axios.get(`${frontendurl()}event/alleventbookeduser`);
         return res.data;
     } catch (error) {
      return rejectWithValue(error)

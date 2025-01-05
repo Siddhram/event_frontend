@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import checkCookieToken from "../cheakcookie";
 import { useNavigate } from "react-router-dom";
+import frontendurl from "../url";
 
 const Createevent = () => {
     const nav=useNavigate();
@@ -22,7 +23,7 @@ const Createevent = () => {
 
 const handelbackedcall=async()=>{
     try {
-        const res=await axios.post('http://localhost:3000/event/create-event',{
+        const res=await axios.post(`${frontendurl()}event/create-event`,{
        category: category,
             eventname: EventName,
             eventplace: EventPlace,
@@ -38,6 +39,7 @@ const handelbackedcall=async()=>{
   })
   console.log(res.data);
   setmess(res.data.message);
+   nav('/admin')
     } catch (error) {
         setmess("error please cheak details")
     }
@@ -53,6 +55,7 @@ useEffect(()=>{
 },[Image]);    
   return (
     <div>
+      
         <div class="m-4 block max-w-screen-sm px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md resize-y focus:outline-none focus:ring-orange-500 focus:border-orange-500 caret-orange-500"
                 >
 <label htmlFor="user-type-dropdown"

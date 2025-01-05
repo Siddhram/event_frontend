@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import frontendurl from "../../url";
 export const getAllEvents=createAsyncThunk('getAllEvents',async (_,{rejectWithValue})=>{
     try {
-        const res=await axios.get('http://localhost:3000/event/getallevents',{
+        const res=await axios.get('event/getallevents',{
             withCredentialsz:true,
         })
         const realres=res.data;
@@ -16,7 +17,7 @@ export const getAllEvents=createAsyncThunk('getAllEvents',async (_,{rejectWithVa
 
 export const bookevent=createAsyncThunk('bookevent',async (data,{rejectWithValue})=>{
     try {
-        const res=await axios.post('http://localhost:3000/event/book-event',data,{
+        const res=await axios.post(`${frontendurl()}event/book-event`,data,{
     withCredentials: true, // Ensures cookies are sent with the request
 })
     const realres=res.data;
@@ -35,7 +36,7 @@ export const bookeventzero=createAsyncThunk('bookeventzero',async (data,{rejectW
            
         };
 
-        const res=await axios.post('http://localhost:3000/event/book-event-zero',data,config)
+        const res=await axios.post(`${frontendurl()}event/book-event-zero`,data,config)
     const realres=res.data;
                 console.log(realres);
 
@@ -47,7 +48,7 @@ export const bookeventzero=createAsyncThunk('bookeventzero',async (data,{rejectW
 
 export const userbookedevents=createAsyncThunk('userbookedevents',async (_,{rejectWithValue})=>{
     try {
-        const res=await axios.get('http://localhost:3000/event/user-updated-events',{
+        const res=await axios.get(`${frontendurl()}event/user-updated-events`,{
             withCredentials:true
         })
         return res.data;
@@ -58,7 +59,7 @@ export const userbookedevents=createAsyncThunk('userbookedevents',async (_,{reje
 
 export const eventBookeduserallevents=createAsyncThunk('eventBookeduserallevents',async (_,{rejectWithValue})=>{
     try {
-          const res=await axios.get('http://localhost:3000/event/event-booked-user',{
+          const res=await axios.get(`${frontendurl()}event/event-booked-user`,{
             withCredentials:true
         });
         return res.data;
