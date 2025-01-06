@@ -4,8 +4,12 @@ import Cookies from 'js-cookie';
 import frontendurl from "../../url";
 export const getAllEvents=createAsyncThunk('getAllEvents',async (_,{rejectWithValue})=>{
     try {
-        const res=await axios.get('event/getallevents',{
+        const res=await axios.get(`${frontendurl()}event/getallevents`,{
             withCredentialsz:true,
+            headers:{
+        'authorization':JSON.parse(localStorage.getItem("token")),
+        'Content-Type': 'application/json',
+    }
         })
         const realres=res.data;
         return realres;
@@ -18,7 +22,11 @@ export const getAllEvents=createAsyncThunk('getAllEvents',async (_,{rejectWithVa
 export const bookevent=createAsyncThunk('bookevent',async (data,{rejectWithValue})=>{
     try {
         const res=await axios.post(`${frontendurl()}event/book-event`,data,{
-    withCredentials: true, // Ensures cookies are sent with the request
+    withCredentials: true,
+    headers:{
+        'authorization':JSON.parse(localStorage.getItem("token")),
+        'Content-Type': 'application/json',
+    }
 })
     const realres=res.data;
         return realres;
@@ -32,8 +40,11 @@ export const bookeventzero=createAsyncThunk('bookeventzero',async (data,{rejectW
 
         // Axios configuration
         const config = {
-            withCredentials: true, // Ensures cookies are sent with the request
-           
+            withCredentials: true,
+            headers:{
+        'authorization':JSON.parse(localStorage.getItem("token")),
+        'Content-Type': 'application/json',
+    }
         };
 
         const res=await axios.post(`${frontendurl()}event/book-event-zero`,data,config)
@@ -49,7 +60,11 @@ export const bookeventzero=createAsyncThunk('bookeventzero',async (data,{rejectW
 export const userbookedevents=createAsyncThunk('userbookedevents',async (_,{rejectWithValue})=>{
     try {
         const res=await axios.get(`${frontendurl()}event/user-updated-events`,{
-            withCredentials:true
+            withCredentials:true,
+            headers:{
+        'authorization':JSON.parse(localStorage.getItem("token")),
+        'Content-Type': 'application/json',
+    }
         })
         return res.data;
     } catch (error) {
@@ -60,7 +75,11 @@ export const userbookedevents=createAsyncThunk('userbookedevents',async (_,{reje
 export const eventBookeduserallevents=createAsyncThunk('eventBookeduserallevents',async (_,{rejectWithValue})=>{
     try {
           const res=await axios.get(`${frontendurl()}event/event-booked-user`,{
-            withCredentials:true
+            withCredentials:true,
+            headers:{
+        'authorization':JSON.parse(localStorage.getItem("admintoken")),
+        'Content-Type': 'application/json',
+    }
         });
         return res.data;
     } catch (error) {

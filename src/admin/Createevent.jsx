@@ -32,7 +32,11 @@ const handelbackedcall=async()=>{
             booklastdate: Booklastdate,
             dis: dis,
   },{
-    withCredentials:true
+    withCredentials:true,
+    headers:{
+        'authorization':JSON.parse(localStorage.getItem("admintoken")),
+        'Content-Type': 'application/json',
+    }
   })
   console.log(res.data);
   setmess(res.data.message);

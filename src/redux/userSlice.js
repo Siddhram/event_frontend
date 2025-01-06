@@ -10,11 +10,17 @@ const initialState={
 export const signInrequest= createAsyncThunk('signInrequest',async (data,{rejectWithValue})=>{
     try {
         const res=await axios.post(`${frontendurl()}user/login`,data, {
-    withCredentials: true, // Ensures cookies are sent with the request
+    withCredentials: true,
+    headers:{
+        'authorization':JSON.parse(localStorage.getItem("token")),
+        'Content-Type': 'application/json',
+    }
 });
         const realres=res.data;
         
         localStorage.setItem('user',JSON.stringify(realres.user));
+                        localStorage.setItem('token',JSON.stringify(realres.token));
+
         // console.log(localStorage.getItem('user'));
         
         return realres;  
@@ -26,7 +32,11 @@ export const signInrequest= createAsyncThunk('signInrequest',async (data,{reject
 export const updateuser=createAsyncThunk('updateuser',async (data,{rejectWithValue})=>{
     try {
         const res=await axios.post(`${frontendurl()}user/update`,data,{
-            withCredentials:true
+            withCredentials:true,
+            headers:{
+        'authorization':JSON.parse(localStorage.getItem("token")),
+        'Content-Type': 'application/json',
+    }
         })
         return res.data;
     } catch (error) {
@@ -47,6 +57,8 @@ const userSlice=createSlice({
        .addCase(signInrequest.fulfilled,(state,action)=>{
         state.isLoding=false;
         state.userData=action.payload.user
+
+
         state.message=action.payload.message
        })
        .addCase(signInrequest.rejected,(state,action)=>{

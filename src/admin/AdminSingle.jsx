@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { delete_event, getallbookedeventsmem } from '../redux/adminredux/adminSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import checkCookieToken from '../cheakcookie';
 import AdminSignin from './AdminSignin';
 import axios from 'axios';
+import frontendurl from '../url';
 
 const AdminSingle = () => {
     const {id}=useParams();
@@ -12,6 +13,9 @@ const AdminSingle = () => {
     const dispatch=useDispatch();
     const array=useSelector((state)=>state.adminSlice.alleventbookedmember)
     const [adhar,setadhar]=useState('');
+    useMemo(()=>{
+        
+    })
     useEffect(()=>{
         dispatch(getallbookedeventsmem());
     },[array])
@@ -38,9 +42,13 @@ if(ev.length==0){
         </div>
     )
 }
-const sendmail=async ()=>{
-    const res=await axios.post(`event/admin/mail`,{userId:JSON.parse(localStorage.getItem('user')),eventbooked:id},{
-        withCredentials:true
+const sendmail=async (tosend)=>{
+    const res=await axios.post(`${frontendurl()}event/admin/mail`,{userId:tosend,eventbooked:id},{
+        withCredentials:true,
+        headers:{
+        'authorization':JSON.parse(localStorage.getItem("admintoken")),
+        'Content-Type': 'application/json',
+    }
     })
     console.log(res.data);
 }
@@ -85,7 +93,7 @@ const sendmail=async ()=>{
             </div>
             
 <button onClick={()=>{
-    sendmail().then(()=>{
+    sendmail(each.userId._id).then(()=>{
     dispatch(delete_event({_id:each._id}));
     })
     

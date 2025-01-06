@@ -8,7 +8,7 @@ export default function App() {
      const user=useSelector((state)=>state.userSlice?.userData?.username)||""
      const image=useSelector((state)=>state.userSlice?.userData?.image)||""
     useEffect(()=>{
-        console.log(user);
+        // console.log(user);
         
     },[user])
 
@@ -61,7 +61,9 @@ export default function App() {
                   <button  title="" className=" hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-black hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full" role="button"> Booked Events </button>
        </Link>
           <button onClick={()=>{
-            Cookies.remove("token");
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            // Cookies.remove("token");
             nav("/")
           }}  title="" className="ml-4 hidden lg:inline-flex items-center justify-center px-3 py-1.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-red-600 rounded-full" role="button">Logout </button>
            <Link to={'/profile'}>

@@ -1,5 +1,5 @@
 const frontendurl=()=>{
-    return "https://event-backend-05tm.onrender.com/";
+    return "http://localhost:3000/";
 }
 
 export default frontendurl;

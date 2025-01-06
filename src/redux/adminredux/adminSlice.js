@@ -15,7 +15,11 @@ export const sininadmin=createAsyncThunk('sininadmin',async (data,{rejectWithVal
 export const delete_event=createAsyncThunk('delete_event',async (data,{rejectWithValue})=>{
     try {
         const res=await axios.post(`${frontendurl()}event/finduseranddeletebookedticket/${data._id}`,{},{
-            withCredentials:true
+            withCredentials:true,
+            headers:{
+        'authorization':JSON.parse(localStorage.getItem("admintoken")),
+        'Content-Type': 'application/json',
+    }
         })
         console.log(res.data);
         
@@ -56,6 +60,8 @@ const adminSlice=createSlice({
         state.adminData=action.payload.adminuser
         state.message=action.payload.message
         localStorage.setItem('admin',JSON.stringify(action.payload.adminuser));
+                localStorage.setItem('admintoken',JSON.stringify(action.payload.admintoken));
+
       })
       .addCase(sininadmin.rejected,(state,action)=>{
         state.isLoding=false;

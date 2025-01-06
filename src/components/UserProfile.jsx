@@ -57,14 +57,14 @@ default:''
     */
        const mess=useSelector((state)=>state.userSlice.userData);
 
-   const [username,setusername]=useState(mess.username);
-      const [contactNo,setcontactNo]=useState(mess.contactNo);
-      const [fullname,setfullname]=useState(mess.fullname);
-      const [state,setstate]=useState(mess.state);
-      const [address,setaddress]=useState(mess.address);
-      const [city,setcity]=useState(mess.city);
-      const [dis,setdis]=useState(mess.dis);
-      const [image,setimage]=useState(mess.image)
+   const [username,setusername]=useState(mess?.username);
+      const [contactNo,setcontactNo]=useState(mess?.contactNo);
+      const [fullname,setfullname]=useState(mess?.fullname);
+      const [state,setstate]=useState(mess?.state);
+      const [address,setaddress]=useState(mess?.address);
+      const [city,setcity]=useState(mess?.city);
+      const [dis,setdis]=useState(mess?.dis);
+      const [image,setimage]=useState(mess?.image)
     const dispatch=useDispatch(); 
     const nav=useNavigate();        
     const update=()=>{
