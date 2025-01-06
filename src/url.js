@@ -1,5 +1,5 @@
 const frontendurl=()=>{
-    return "https://exploreevents_back.vercel.app/";
+    return "https://exploreeventsback.vercel.app/";
 }
 
 export default frontendurl;
