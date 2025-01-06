@@ -1,5 +1,5 @@
 const frontendurl=()=>{
-    return "http://localhost:3000/";
+    return "https://exploreevents_back.vercel.app/";
 }
 
 export default frontendurl;
