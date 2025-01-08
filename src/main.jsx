@@ -24,6 +24,7 @@ import UserProfile from './components/UserProfile.jsx'
 import Sortpage from './components/Sortpage.jsx'
 import Contact from './components/Contact.jsx'
 import IssueAdmin from './admin/IssueAdmin.jsx'
+import PageNotfound from './components/PageNotfound.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
@@ -52,6 +53,7 @@ createRoot(document.getElementById('root')).render(
       <Route path='/admin/:id' element={<AdminSingle></AdminSingle>}></Route>
 
       <Route path='/:id' element={<Sigleevent></Sigleevent>}></Route>
+          <Route path="*" element={<PageNotfound />} />
 
      </Routes>
     </BrowserRouter>
